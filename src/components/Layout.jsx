@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'Domains', path: '/domains' },
   { name: 'Benchmark', path: '/benchmark' },
   { name: 'Docs', path: '/docs' },
+  { name: 'About', path: '/about' },
 ];
 
 export default function Layout() {
