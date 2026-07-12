@@ -99,22 +99,41 @@ export default function LiveDemo() {
     setResultData(null);
   };
 
-  const handleAudit = () => {
+  const handleAudit = async () => {
     if (!input.trim() || input.length > MAX_CHARS) return;
     
-    // Attempt to match input to known example, else default to 'Sound'
-    const matchedEx = EXAMPLES.find(ex => ex.text === input) || EXAMPLES[2];
-    
     setAuditState('decomposing');
+    setResultData(null);
     
-    // Simulate pipeline
-    setTimeout(() => setAuditState('consistency'), 800);
-    setTimeout(() => setAuditState('faithfulness'), 1600);
-    setTimeout(() => setAuditState('classifying'), 2400);
-    setTimeout(() => {
-      setResultData(matchedEx.result);
+    // Simulate pipeline for visual effect while request is pending
+    const timers = [
+      setTimeout(() => setAuditState('consistency'), 1500),
+      setTimeout(() => setAuditState('faithfulness'), 3000),
+      setTimeout(() => setAuditState('classifying'), 4500)
+    ];
+
+    try {
+      const response = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chain: input, domain: activeExample?.domain || 'general' })
+      });
+      
+      const resData = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(resData.error || 'Audit failed');
+      }
+
+      setResultData(resData.data);
       setAuditState('complete');
-    }, 3200);
+    } catch (error) {
+      console.error(error);
+      alert('Error running audit: ' + error.message);
+      setAuditState('idle');
+    } finally {
+      timers.forEach(clearTimeout);
+    }
   };
 
   const toggleFlag = (flagId) => {
