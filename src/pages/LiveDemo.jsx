@@ -1,88 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Copy, Download, Code, Layout as LayoutIcon, CheckCircle2, AlertTriangle, ChevronDown, ChevronUp } from 'lucide-react';
+import { EXAMPLES } from '../data/examples';
 
 const MAX_CHARS = 2000;
 
-const EXAMPLES = [
-  {
-    name: "Medical",
-    text: "Patient presents with severe hypotension. Administer standard dose of drug X. However, drug X is contraindicated in patients with low blood pressure.",
-    domain: "medical",
-    result: {
-      status: "flagged",
-      flags: [
-        {
-          id: "f1",
-          type: "contradiction",
-          severity: "high",
-          claims: [
-            { id: "c1", text: "Patient presents with severe hypotension." },
-            { id: "c2", text: "Administer standard dose of drug X." },
-            { id: "c3", text: "drug X is contraindicated in patients with low blood pressure." }
-          ],
-          explanation: "Claim 2 recommends administering drug X, but Claim 3 states drug X is contraindicated for low blood pressure, which the patient has (Claim 1).",
-          highlightPatterns: ["Administer standard dose of drug X", "drug X is contraindicated in patients with low blood pressure"]
-        }
-      ]
-    }
-  },
-  {
-    name: "Legal",
-    text: "The contract requires a 30-day notice for termination. The client sent notice on Oct 1st and terminated on Oct 15th, which satisfies the contract requirements.",
-    domain: "legal",
-    result: {
-      status: "flagged",
-      flags: [
-        {
-          id: "f1",
-          type: "contradiction",
-          severity: "high",
-          claims: [
-            { id: "c1", text: "The contract requires a 30-day notice for termination." },
-            { id: "c2", text: "The client sent notice on Oct 1st and terminated on Oct 15th" },
-            { id: "c3", text: "which satisfies the contract requirements." }
-          ],
-          explanation: "Claim 3 asserts that a 14-day duration (Oct 1st to Oct 15th) satisfies a condition defined as 30 days in Claim 1.",
-          highlightPatterns: ["The contract requires a 30-day notice", "terminated on Oct 15th, which satisfies the contract requirements"]
-        }
-      ]
-    }
-  },
-  {
-    name: "Finance (Sound)",
-    text: "The company reported a 15% increase in Q3 revenue. Cost of goods sold decreased by 2%. This combination of higher revenue and lower costs led to a significant expansion in gross margin for the quarter.",
-    domain: "finance",
-    result: {
-      status: "passed",
-      flags: []
-    }
-  },
-  {
-    name: "DevOps",
-    text: "The database cluster experienced high latency. We scaled read replicas by 3x to handle the load. However, the root cause was determined to be a missing index on the users table, so scaling replicas resolved the issue entirely.",
-    domain: "devops",
-    result: {
-      status: "flagged",
-      flags: [
-        {
-          id: "f1",
-          type: "unsupported leap",
-          severity: "medium",
-          claims: [
-            { id: "c1", text: "root cause was determined to be a missing index" },
-            { id: "c2", text: "scaling replicas resolved the issue entirely" }
-          ],
-          explanation: "Scaling read replicas does not resolve a missing index issue, it only masks the performance degradation temporarily.",
-          highlightPatterns: ["scaling replicas resolved the issue entirely"]
-        }
-      ]
-    }
-  }
-];
-
 export default function LiveDemo() {
-  const [input, setInput] = useState('');
-  const [activeExample, setActiveExample] = useState(null);
+  const location = useLocation();
+  
+  // Initialize state from route location if provided (e.g. from Domains page)
+  const initialExample = location.state?.domain ? EXAMPLES.find(ex => ex.domain === location.state.domain) : null;
+  
+  const [input, setInput] = useState(initialExample?.text || '');
+  const [activeExample, setActiveExample] = useState(initialExample);
   
   // Pipeline state: 'idle' | 'decomposing' | 'consistency' | 'faithfulness' | 'classifying' | 'complete'
   const [auditState, setAuditState] = useState('idle');
