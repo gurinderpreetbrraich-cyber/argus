@@ -52,7 +52,7 @@ export default function Domains() {
             </div>
             
             <div className="flex-grow">
-              <p className="text-sm text-white/80 leading-relaxed italic border-l-2 border-white/20 pl-3 mb-4 line-clamp-4">
+              <p className="text-sm text-white/80 leading-relaxed italic border-l-2 border-white/20 pl-3 mb-4">
                 "{domain.text}"
               </p>
             </div>
