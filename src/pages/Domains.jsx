@@ -112,7 +112,7 @@ export default function Domains() {
             <span className="text-xs text-white/40 font-mono ml-2">argus-medical-lens.json</span>
           </div>
           <div className="p-6 overflow-x-auto">
-            <pre className="text-sm font-mono leading-relaxed">
+            <pre className="text-sm font-mono leading-relaxed whitespace-pre-wrap break-words">
               <code className="text-white/80">
 <span className="text-pink-400">{"{"}</span>
 <br/>  <span className="text-blue-300">"domain"</span>: <span className="text-green-300">"medical"</span>,

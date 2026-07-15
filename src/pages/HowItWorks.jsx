@@ -137,7 +137,7 @@ export default function HowItWorks() {
                           <span>Worked Example (Medical)</span>
                         </div>
                         <div className="p-4 overflow-x-auto">
-                          <pre className="text-sm font-mono leading-relaxed text-white/80">
+                          <pre className="text-sm font-mono leading-relaxed text-white/80 whitespace-pre-wrap break-words">
                             <code>{step.exampleCode}</code>
                           </pre>
                         </div>
