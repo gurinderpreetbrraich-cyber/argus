@@ -68,7 +68,7 @@ export default function About() {
                 <GithubIcon /> GitHub
               </a>
               <a 
-                href="#" 
+                href="https://www.linkedin.com/in/gurinderpreet-singh-00360037a/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/10 px-4 py-2 rounded-lg transition-colors text-sm font-medium text-white"
