@@ -49,14 +49,10 @@ export default function Layout() {
         
         {/* Desktop CTA */}
         <div className="hidden md:block">
-          <LiquidButton 
-            size="default" 
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = '/demo';
-            }}
-          >
-            Try the demo
+          <LiquidButton size="default" asChild>
+            <Link to="/demo">
+              Try the demo
+            </Link>
           </LiquidButton>
         </div>
 
@@ -101,15 +97,10 @@ export default function Layout() {
             </Link>
           ))}
           <div className="mt-6">
-            <LiquidButton 
-              size="lg" 
-              onClick={(e) => {
-                e.preventDefault();
-                closeMenu();
-                window.location.href = '/demo';
-              }}
-            >
-              Try the demo
+            <LiquidButton size="lg" asChild>
+              <Link to="/demo" onClick={closeMenu}>
+                Try the demo
+              </Link>
             </LiquidButton>
           </div>
         </div>

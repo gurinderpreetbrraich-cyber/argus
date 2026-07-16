@@ -22,14 +22,10 @@ export default function Home() {
           </p>
           
           <div className="mt-6 animate-fade-rise" style={{ animationDelay: '0.4s' }}>
-            <LiquidButton 
-              size="xxl" 
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = '/demo';
-              }}
-            >
-              Try the demo
+            <LiquidButton size="xxl" asChild>
+              <Link to="/demo">
+                Try the demo
+              </Link>
             </LiquidButton>
           </div>
         </div>
