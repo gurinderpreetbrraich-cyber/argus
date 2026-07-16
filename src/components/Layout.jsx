@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink, Link, Outlet } from 'react-router-dom';
+import { NavLink, Link, Outlet, useNavigate } from 'react-router-dom';
+import { LiquidButton } from "./ui/liquid-glass-button";
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -43,12 +44,17 @@ export default function Layout() {
         </div>
         
         {/* Desktop CTA */}
-        <Link 
-          to="/demo"
-          className="hidden liquid-glass rounded-full px-5 py-2 text-sm font-medium text-white transition-transform hover:scale-[1.03] md:block"
-        >
-          Try the demo
-        </Link>
+        <div className="hidden md:block">
+          <LiquidButton 
+            size="default" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href = '/demo';
+            }}
+          >
+            Try the demo
+          </LiquidButton>
+        </div>
 
         {/* Mobile Toggle Button */}
         <button
@@ -90,13 +96,18 @@ export default function Layout() {
               {item.name}
             </Link>
           ))}
-          <Link
-            to="/demo"
-            onClick={closeMenu}
-            className="liquid-glass mt-6 rounded-full px-8 py-3.5 text-base font-medium text-white hover:scale-[1.03]"
-          >
-            Try the demo
-          </Link>
+          <div className="mt-6">
+            <LiquidButton 
+              size="lg" 
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenu();
+                window.location.href = '/demo';
+              }}
+            >
+              Try the demo
+            </LiquidButton>
+          </div>
         </div>
       </div>
 
