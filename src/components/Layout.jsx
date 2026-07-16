@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { NavLink, Link, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LiquidButton } from "./ui/liquid-glass-button";
+import { Starfield } from "./ui/starfield";
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -14,12 +15,15 @@ const navLinks = [
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeMenu = () => setMobileMenuOpen(false);
 
   return (
-    <div className="relative min-h-screen w-full bg-background font-body text-foreground">
+    <div className="relative min-h-screen w-full bg-background font-body text-foreground overflow-hidden">
+      {!isHome && <Starfield />}
       {/* Navbar */}
       <nav className="absolute inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-5 md:px-12 lg:px-16">
         <div className="flex items-center gap-8">
