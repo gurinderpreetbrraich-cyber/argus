@@ -16,6 +16,7 @@ const navLinks = [
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const isHome = location.pathname === '/';
 
   const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
@@ -49,10 +50,11 @@ export default function Layout() {
         
         {/* Desktop CTA */}
         <div className="hidden md:block">
-          <LiquidButton size="default" asChild>
-            <Link to="/demo">
-              Try the demo
-            </Link>
+          <LiquidButton 
+            size="default"
+            onClick={() => navigate('/demo')}
+          >
+            Try the demo
           </LiquidButton>
         </div>
 
@@ -97,10 +99,14 @@ export default function Layout() {
             </Link>
           ))}
           <div className="mt-6">
-            <LiquidButton size="lg" asChild>
-              <Link to="/demo" onClick={closeMenu}>
-                Try the demo
-              </Link>
+            <LiquidButton 
+              size="lg"
+              onClick={() => {
+                closeMenu();
+                navigate('/demo');
+              }}
+            >
+              Try the demo
             </LiquidButton>
           </div>
         </div>

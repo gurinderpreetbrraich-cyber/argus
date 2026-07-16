@@ -4,6 +4,7 @@ import { WebGLShader } from "../components/ui/web-gl-shader";
 import { LiquidButton } from "../components/ui/liquid-glass-button";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden">
       {/* WebGL Shader Background */}
@@ -22,10 +23,11 @@ export default function Home() {
           </p>
           
           <div className="mt-6 animate-fade-rise" style={{ animationDelay: '0.4s' }}>
-            <LiquidButton size="xxl" asChild>
-              <Link to="/demo">
-                Try the demo
-              </Link>
+            <LiquidButton 
+              size="xxl"
+              onClick={() => navigate('/demo')}
+            >
+              Try the demo
             </LiquidButton>
           </div>
         </div>
