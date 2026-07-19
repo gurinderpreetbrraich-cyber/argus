@@ -86,7 +86,7 @@ export default function HowItWorks() {
   return (
     <div className="mx-auto max-w-4xl px-6 pt-32 pb-24 md:px-12 lg:px-16 font-body">
       <div className="mb-16">
-        <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl font-medium tracking-tight text-white">
+        <h1 className="animate-fade-rise font-display text-5xl md:text-6xl font-medium tracking-tight text-white">
           How Argus reads a reasoning chain
         </h1>
         <p className="animate-fade-rise mt-4 max-w-2xl text-lg text-white/60 leading-relaxed" style={{ animationDelay: '0.2s' }}>

@@ -19,7 +19,7 @@ export default function About() {
   return (
     <div className="mx-auto max-w-4xl px-6 pt-32 pb-24 md:px-12 lg:px-16 font-body">
       <div className="mb-12">
-        <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl font-medium tracking-tight mb-4">
+        <h1 className="animate-fade-rise font-display text-5xl md:text-6xl font-medium tracking-tight mb-4">
           About Argus
         </h1>
       </div>

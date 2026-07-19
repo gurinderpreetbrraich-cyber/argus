@@ -4,9 +4,11 @@ import { LiquidButton } from "./ui/liquid-glass-button";
 import { Starfield } from "./ui/starfield";
 import { Menu, X } from 'lucide-react';
 
+import Footer from "./Footer";
+
 const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'How it works', path: '/how-it-works' },
+  { name: 'How It Works', path: '/how-it-works' },
   { name: 'Domains', path: '/domains' },
   { name: 'Benchmark', path: '/benchmark' },
   { name: 'Docs', path: '/docs' },
@@ -116,6 +118,8 @@ export default function Layout() {
       <main className="relative z-10 min-h-screen">
         <Outlet />
       </main>
+
+      <Footer />
     </div>
   );
 }

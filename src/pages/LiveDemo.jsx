@@ -14,9 +14,10 @@ export default function LiveDemo() {
   const [input, setInput] = useState(initialExample?.text || '');
   const [activeExample, setActiveExample] = useState(initialExample);
   
-  // Pipeline state: 'idle' | 'decomposing' | 'consistency' | 'faithfulness' | 'classifying' | 'complete'
+  // Pipeline state: 'idle' | 'decomposing' | 'consistency' | 'faithfulness' | 'classifying' | 'complete' | 'error'
   const [auditState, setAuditState] = useState('idle');
   const [resultData, setResultData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [viewMode, setViewMode] = useState('ui'); // 'ui' | 'api'
   const [expandedFlags, setExpandedFlags] = useState({});
 
@@ -52,15 +53,15 @@ export default function LiveDemo() {
       const resData = await response.json();
       
       if (!response.ok) {
-        throw new Error(resData.error || 'Audit failed');
+        throw new Error(resData.error || 'API rate limit reached.');
       }
 
       setResultData(resData.data);
       setAuditState('complete');
     } catch (error) {
       console.error(error);
-      alert('Error running audit: ' + error.message);
-      setAuditState('idle');
+      setErrorMessage('Our demo API is currently experiencing heavy load. Please try again in a moment.');
+      setAuditState('error');
     } finally {
       timers.forEach(clearTimeout);
     }
@@ -140,7 +141,7 @@ export default function LiveDemo() {
       
       {/* Header - Hidden on print */}
       <div className="mb-12 text-center print:hidden">
-        <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl font-medium tracking-tight">
+        <h1 className="animate-fade-rise font-display text-5xl md:text-6xl font-medium tracking-tight">
           Audit a reasoning chain
         </h1>
         <p className="animate-fade-rise mt-4 text-lg text-muted-foreground" style={{ animationDelay: '0.2s' }}>
@@ -256,21 +257,47 @@ export default function LiveDemo() {
           
           {/* Empty State */}
           {auditState === 'idle' && (
-            <div className="flex-1 flex items-center justify-center text-muted-foreground border border-dashed border-white/10 rounded-xl">
-              Run an audit to see results here.
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed border-white/10 rounded-xl bg-white/5">
+              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-4 border border-white/10">
+                <LayoutIcon className="w-6 h-6 text-white/40" />
+              </div>
+              <h3 className="text-white font-medium mb-2">Awaiting Input</h3>
+              <p className="text-sm text-muted-foreground max-w-xs">
+                Select an example from the left or paste your own reasoning chain to begin the audit pipeline.
+              </p>
             </div>
           )}
 
-          {/* Loading Pipeline */}
-          {isRunning && (
-            <div className="flex-1 flex flex-col justify-center items-center py-12">
-              <div className="w-full max-w-xs space-y-6">
+          {/* Error State */}
+          {auditState === 'error' && (
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-red-500/20 rounded-xl bg-red-500/5">
+              <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-4 border border-red-500/20">
+                <AlertTriangle className="w-6 h-6 text-red-400" />
+              </div>
+              <h3 className="text-white font-medium mb-2">Audit Failed</h3>
+              <p className="text-sm text-muted-foreground max-w-xs mb-6">
+                {errorMessage}
+              </p>
+              <button 
+                onClick={handleAudit}
+                className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition-colors border border-white/10"
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+
+          {/* Loading Pipeline & Skeleton */}
+          {isRunning && auditState !== 'error' && (
+            <div className="flex-1 flex flex-col h-full">
+              {/* Progress Steps */}
+              <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/10 overflow-x-auto gap-4 scrollbar-hide">
                 {[
-                  { id: 'decomposing', label: 'Decomposing claims' },
-                  { id: 'consistency', label: 'Cross-claim consistency' },
-                  { id: 'faithfulness', label: 'Faithfulness verification' },
-                  { id: 'classifying', label: 'Failure classification' }
-                ].map((step, idx) => {
+                  { id: 'decomposing', label: 'Decompose' },
+                  { id: 'consistency', label: 'Consistency' },
+                  { id: 'faithfulness', label: 'Faithful' },
+                  { id: 'classifying', label: 'Classify' }
+                ].map((step) => {
                   const states = ['idle', 'decomposing', 'consistency', 'faithfulness', 'classifying', 'complete'];
                   const currentIndex = states.indexOf(auditState);
                   const stepIndex = states.indexOf(step.id);
@@ -280,16 +307,29 @@ export default function LiveDemo() {
                   if (currentIndex === stepIndex) status = 'active';
 
                   return (
-                    <div key={step.id} className="flex items-center gap-4">
+                    <div key={step.id} className="flex flex-col items-center gap-2 min-w-max">
                       {status === 'done' && <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" />}
                       {status === 'active' && <div className="w-5 h-5 rounded-full border-2 border-white/20 border-t-white animate-spin shrink-0"></div>}
                       {status === 'waiting' && <div className="w-5 h-5 rounded-full border-2 border-white/10 shrink-0"></div>}
-                      <span className={`text-sm transition-colors ${status === 'active' ? 'text-white font-medium' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
+                      <span className={`text-xs uppercase tracking-wider font-medium transition-colors ${status === 'active' ? 'text-white' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
                         {step.label}
                       </span>
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Skeleton UI */}
+              <div className="space-y-6 flex-1 opacity-50 animate-pulse">
+                <div className="h-16 bg-white/5 rounded-lg border border-white/5 w-full"></div>
+                <div>
+                  <div className="h-3 bg-white/10 rounded w-24 mb-3"></div>
+                  <div className="h-24 bg-white/5 rounded-xl border border-white/5 w-full"></div>
+                </div>
+                <div className="space-y-3">
+                  <div className="h-20 bg-white/5 rounded-xl border border-white/5 w-full"></div>
+                  <div className="h-20 bg-white/5 rounded-xl border border-white/5 w-full"></div>
+                </div>
               </div>
             </div>
           )}

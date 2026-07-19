@@ -21,7 +21,7 @@ export default function Domains() {
   return (
     <div className="mx-auto max-w-6xl px-6 pt-32 pb-24 md:px-12 lg:px-16 font-body">
       <div className="mb-16 text-center max-w-3xl mx-auto">
-        <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl font-medium tracking-tight text-white mb-6">
+        <h1 className="animate-fade-rise font-display text-5xl md:text-6xl font-medium tracking-tight text-white mb-6">
           Built for any domain, tuned for none
         </h1>
         <p className="animate-fade-rise text-lg text-white/70 leading-relaxed" style={{ animationDelay: '0.2s' }}>

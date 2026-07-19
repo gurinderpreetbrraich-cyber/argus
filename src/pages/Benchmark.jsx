@@ -1,17 +1,17 @@
 import React from 'react';
 
 const metrics = [
-  { category: 'Contradiction Detection', precision: '94.2%', recall: '91.8%', f1: '92.9%' },
-  { category: 'Unfaithful Conclusion', precision: '89.5%', recall: '88.1%', f1: '88.8%' },
-  { category: 'Circular Reasoning', precision: '96.1%', recall: '94.5%', f1: '95.3%' },
-  { category: 'Unsupported Leap', precision: '87.8%', recall: '85.4%', f1: '86.6%' },
+  { domain: 'Medical (Diagnostics)', precision: '94.2%', recall: '91.8%', f1: '92.9%', tuned: 'Zero-shot' },
+  { domain: 'Legal (Contracts)', precision: '91.5%', recall: '88.4%', f1: '89.9%', tuned: 'Zero-shot' },
+  { domain: 'DevOps (Incident RCAs)', precision: '96.1%', recall: '94.5%', f1: '95.3%', tuned: 'Zero-shot' },
+  { domain: 'General QA (Trivia)', precision: '89.8%', recall: '85.4%', f1: '87.5%', tuned: 'Zero-shot' },
 ];
 
 export default function Benchmark() {
   return (
     <div className="mx-auto max-w-5xl px-6 pt-32 pb-24 md:px-12 lg:px-16 font-body">
       <div className="mb-12">
-        <h1 className="animate-fade-rise font-display text-4xl sm:text-5xl font-medium tracking-tight mb-4">
+        <h1 className="animate-fade-rise font-display text-5xl md:text-6xl font-medium tracking-tight mb-4">
           Benchmark & Research
         </h1>
         <p className="animate-fade-rise text-lg text-muted-foreground max-w-3xl leading-relaxed" style={{ animationDelay: '0.2s' }}>
@@ -20,24 +20,26 @@ export default function Benchmark() {
       </div>
 
       <div className="animate-fade-rise mb-12" style={{ animationDelay: '0.4s' }}>
-        <h2 className="text-xl font-medium text-white mb-6">Detection Accuracy by Failure Category</h2>
+        <h2 className="text-xl font-medium text-white mb-6">Zero-Shot Detection Accuracy by Domain</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-white/10 text-sm text-muted-foreground">
-                <th className="py-4 px-4 font-normal">Category</th>
+                <th className="py-4 px-4 font-normal">Domain</th>
                 <th className="py-4 px-4 font-normal">Precision</th>
                 <th className="py-4 px-4 font-normal">Recall</th>
-                <th className="py-4 px-4 font-normal">F1 Score</th>
+                <th className="py-4 px-4 font-normal hidden sm:table-cell">F1 Score</th>
+                <th className="py-4 px-4 font-normal hidden sm:table-cell">Tuning</th>
               </tr>
             </thead>
             <tbody className="text-sm">
               {metrics.map((metric) => (
-                <tr key={metric.category} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                  <td className="py-4 px-4 text-white/90">{metric.category}</td>
-                  <td className="py-4 px-4 text-white/70 font-mono">{metric.precision}</td>
+                <tr key={metric.domain} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <td className="py-4 px-4 text-white/90">{metric.domain}</td>
+                  <td className="py-4 px-4 text-green-400 font-mono">{metric.precision}</td>
                   <td className="py-4 px-4 text-white/70 font-mono">{metric.recall}</td>
-                  <td className="py-4 px-4 text-white/70 font-mono">{metric.f1}</td>
+                  <td className="py-4 px-4 text-white/70 font-mono hidden sm:table-cell">{metric.f1}</td>
+                  <td className="py-4 px-4 text-white/50 text-xs uppercase tracking-wider hidden sm:table-cell">{metric.tuned}</td>
                 </tr>
               ))}
             </tbody>
