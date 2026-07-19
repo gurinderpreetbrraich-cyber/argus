@@ -11,7 +11,7 @@ export default {
         body: ['Inter', 'sans-serif'],
       },
       colors: {
-        background: 'hsl(201, 100%, 6%)',
+        background: 'hsl(0, 0%, 3%)',
         foreground: 'hsl(0, 0%, 100%)',
         muted: {
           DEFAULT: 'hsl(0, 0%, 10%)',
