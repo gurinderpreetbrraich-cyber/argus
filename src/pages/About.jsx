@@ -51,7 +51,7 @@ export default function About() {
         <section className="pt-8 border-t border-white/10">
           <h2 className="text-white font-medium mb-3 text-2xl font-display">The Author</h2>
           <p className="mb-6 text-white/80 text-lg">
-            Built by <span className="text-white font-medium">CodeHolic</span>, a first-year Computer Science student at Thapar Institute of Engineering and Technology (TIET).
+            I'm <span className="text-white font-medium">Gurinderpreet Singh</span>. CS student at TIET, currently learning most things by building them rather than reading about them first. Argus is the latest one.
           </p>
           
           <div className="bg-white/5 border border-white/10 rounded-xl p-5 mb-8">
