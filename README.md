@@ -8,6 +8,7 @@
     <a href="https://argus-gules-omega.vercel.app"><img src="https://img.shields.io/badge/demo-live-brightgreen.svg?style=for-the-badge" alt="Live Demo"></a>
     <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="License: MIT"></a>
     <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React"></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript"></a>
     <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS"></a>
     <a href="https://vercel.com/"><img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel"></a>
   </p>
@@ -124,7 +125,7 @@ Paste a reasoning chain from *any* domain into the live demo and watch Argus fla
 <td width="55%">
 
 ### Tech Stack
-* **Frontend:** React + Vite + TypeScript
+* **Frontend:** React + Vite + JavaScript
 * **Styling:** Tailwind CSS + shadcn/ui
 * **Graphics:** Three.js (WebGL Shaders)
 * **Backend:** Vercel Serverless Functions (`/api`) 
@@ -143,7 +144,7 @@ argus/
 │   ├── pages/        # Route components
 │   └── index.css     # Global styles
 ├── api/
-│   └── audit.ts      # Serverless LLM call
+│   └── audit.js      # Serverless LLM call
 ├── public/           # Static assets
 ├── index.html        # Meta & OG tags
 ├── vercel.json       # SPA routing config
