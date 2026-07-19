@@ -27,7 +27,7 @@ export default function Home() {
               size="xxl"
               onClick={() => navigate('/demo')}
             >
-              Try the demo
+              Audit a reasoning chain
             </LiquidButton>
           </div>
         </div>

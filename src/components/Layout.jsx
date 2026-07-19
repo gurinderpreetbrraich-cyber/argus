@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LiquidButton } from "./ui/liquid-glass-button";
 import { Starfield } from "./ui/starfield";
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Github } from 'lucide-react';
 
 import Footer from "./Footer";
 
@@ -54,9 +54,12 @@ export default function Layout() {
         <div className="hidden md:block">
           <LiquidButton 
             size="default"
-            onClick={() => navigate('/demo')}
+            onClick={() => window.open('https://github.com/gurinderpreetbrraich-cyber/argus', '_blank')}
           >
-            Try the demo
+            <div className="flex items-center gap-2">
+              <Github size={16} />
+              <span>GitHub</span>
+            </div>
           </LiquidButton>
         </div>
 
@@ -105,10 +108,13 @@ export default function Layout() {
               size="lg"
               onClick={() => {
                 closeMenu();
-                navigate('/demo');
+                window.open('https://github.com/gurinderpreetbrraich-cyber/argus', '_blank');
               }}
             >
-              Try the demo
+              <div className="flex items-center gap-2">
+                <Github size={18} />
+                <span>GitHub</span>
+              </div>
             </LiquidButton>
           </div>
         </div>
