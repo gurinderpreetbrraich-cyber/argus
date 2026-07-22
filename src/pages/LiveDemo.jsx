@@ -287,16 +287,15 @@ export default function LiveDemo() {
             </div>
           )}
 
-          {/* Loading Pipeline & Skeleton */}
+          {/* Loading Pipeline */}
           {isRunning && auditState !== 'error' && (
-            <div className="flex-1 flex flex-col h-full">
-              {/* Progress Steps */}
-              <div className="flex flex-col gap-5 mb-8 pb-6 border-b border-white/10">
+            <div className="flex-1 flex flex-col justify-center items-center py-12">
+              <div className="w-full max-w-xs space-y-6">
                 {[
-                  { id: 'decomposing', label: 'Decompose' },
-                  { id: 'consistency', label: 'Consistency' },
-                  { id: 'faithfulness', label: 'Faithful' },
-                  { id: 'classifying', label: 'Classify' }
+                  { id: 'decomposing', label: 'Decomposing claims' },
+                  { id: 'consistency', label: 'Cross-claim consistency' },
+                  { id: 'faithfulness', label: 'Faithfulness verification' },
+                  { id: 'classifying', label: 'Failure classification' }
                 ].map((step) => {
                   const states = ['idle', 'decomposing', 'consistency', 'faithfulness', 'classifying', 'complete'];
                   const currentIndex = states.indexOf(auditState);
@@ -311,25 +310,12 @@ export default function LiveDemo() {
                       {status === 'done' && <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" />}
                       {status === 'active' && <div className="w-5 h-5 rounded-full border-2 border-white/20 border-t-white animate-spin shrink-0"></div>}
                       {status === 'waiting' && <div className="w-5 h-5 rounded-full border-2 border-white/10 shrink-0"></div>}
-                      <span className={`text-sm uppercase tracking-wider font-medium transition-colors ${status === 'active' ? 'text-white' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
+                      <span className={`text-sm transition-colors ${status === 'active' ? 'text-white font-medium' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
                         {step.label}
                       </span>
                     </div>
                   );
                 })}
-              </div>
-
-              {/* Skeleton UI */}
-              <div className="space-y-6 flex-1 opacity-50 animate-pulse">
-                <div className="h-16 bg-white/5 rounded-lg border border-white/5 w-full"></div>
-                <div>
-                  <div className="h-3 bg-white/10 rounded w-24 mb-3"></div>
-                  <div className="h-24 bg-white/5 rounded-xl border border-white/5 w-full"></div>
-                </div>
-                <div className="space-y-3">
-                  <div className="h-20 bg-white/5 rounded-xl border border-white/5 w-full"></div>
-                  <div className="h-20 bg-white/5 rounded-xl border border-white/5 w-full"></div>
-                </div>
               </div>
             </div>
           )}
