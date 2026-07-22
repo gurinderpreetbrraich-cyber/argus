@@ -291,7 +291,7 @@ export default function LiveDemo() {
           {isRunning && auditState !== 'error' && (
             <div className="flex-1 flex flex-col h-full">
               {/* Progress Steps */}
-              <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/10 overflow-x-auto gap-4 scrollbar-hide">
+              <div className="flex flex-col gap-5 mb-8 pb-6 border-b border-white/10">
                 {[
                   { id: 'decomposing', label: 'Decompose' },
                   { id: 'consistency', label: 'Consistency' },
@@ -307,11 +307,11 @@ export default function LiveDemo() {
                   if (currentIndex === stepIndex) status = 'active';
 
                   return (
-                    <div key={step.id} className="flex flex-col items-center gap-2 min-w-max">
+                    <div key={step.id} className="flex items-center gap-4">
                       {status === 'done' && <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" />}
                       {status === 'active' && <div className="w-5 h-5 rounded-full border-2 border-white/20 border-t-white animate-spin shrink-0"></div>}
                       {status === 'waiting' && <div className="w-5 h-5 rounded-full border-2 border-white/10 shrink-0"></div>}
-                      <span className={`text-xs uppercase tracking-wider font-medium transition-colors ${status === 'active' ? 'text-white' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
+                      <span className={`text-sm uppercase tracking-wider font-medium transition-colors ${status === 'active' ? 'text-white' : status === 'done' ? 'text-white/70' : 'text-white/30'}`}>
                         {step.label}
                       </span>
                     </div>
